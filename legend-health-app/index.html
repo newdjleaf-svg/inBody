@@ -27,12 +27,13 @@
         <button data-view="profile">👤 基本資料</button>
         <button data-view="body">📏 身體數據</button>
         <button data-view="lifestyle">💧 生活狀態</button>
+        <button data-view="reminder">🔔 喝水提醒</button>
         <button data-view="protein">🥛 蛋白質紀錄</button>
         <button data-view="feelings">❤️ 自我感受</button>
         <button data-view="report">📄 完整報告</button>
         <button data-view="backup">⚙️ 備份與設定</button>
       </nav>
-      <div class="side-foot">資料僅儲存在此裝置瀏覽器</div>
+      <div class="side-foot">健康紀錄儲存在此裝置；推播排程會安全儲存在 Railway 資料庫</div>
     </aside>
 
     <main class="content">
@@ -72,6 +73,8 @@
           <div class="form-grid">
             <label>姓名<input id="clientName" data-root="name" autocomplete="off" placeholder="請輸入姓名"></label>
             <label>年齡<input id="clientAge" data-root="age" type="number" min="0" max="120" inputmode="numeric" placeholder="歲"></label>
+            <label>性別<select id="clientGender" data-root="gender"><option value="">請選擇</option><option value="男">男</option><option value="女">女</option></select></label>
+            <label>身高（cm）<input id="clientHeight" data-root="height" type="number" min="80" max="250" step="0.1" inputmode="decimal" placeholder="例如 170"></label>
             <label>電話<input id="clientPhone" data-root="phone" type="tel" autocomplete="off" placeholder="選填"></label>
             <label>開始日期<input id="startDate" data-root="startDate" type="date"></label>
             <label class="wide">備註<textarea id="clientNote" data-root="note" rows="5" placeholder="健康管理師備註、飲食習慣或需要關注的事項"></textarea></label>
@@ -83,7 +86,8 @@
       <section id="view-body" class="view export-page">
         <div class="page-head compact-head"><div><p class="eyebrow">第一部分</p><h1>身體數據紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
         <div class="formula-strip"><span>姓名：<b data-print="name">—</b></span><span>每日水量：<b data-print="water">—</b></span><span>每日蛋白質：<b data-print="protein">—</b></span></div>
-        <div class="card table-card"><div class="responsive-table"><table><thead><tr><th>項目</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="bodyRows"></tbody></table></div></div>
+        <div class="ideal-guide" id="idealGuide"></div>
+        <div class="card table-card"><div class="responsive-table"><table><thead><tr><th>項目／理想值</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="bodyRows"></tbody></table></div></div>
         <div class="card compare-card"><h2>啟動前 → Day 3</h2><div id="comparisonGrid" class="comparison-grid"></div></div>
       </section>
 
@@ -91,6 +95,45 @@
         <div class="page-head compact-head"><div><p class="eyebrow">第二部分</p><h1>生活狀態紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
         <div class="formula-strip"><span>建議每日水量：<b data-print="water">—</b></span><span>起床先喝 500cc</span><span>少量多次慢慢喝</span></div>
         <div id="lifestyleGrid" class="four-grid"></div>
+      </section>
+
+      <section id="view-reminder" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">背景推播</p><h1>喝水提醒</h1><p>即使關閉網頁，也可由 Railway 後端按排程推送到手機。</p></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="reminder-hero card">
+          <div><span class="reminder-icon">💧</span><div><b>目前紀錄對象：<span id="reminderClientName">—</span></b><small>每日建議水量：<span id="reminderTargetWater">—</span></small></div></div>
+          <span id="pushStatusBadge" class="push-badge">尚未啟用</span>
+        </div>
+        <div class="settings-grid reminder-grid">
+          <article class="card setting">
+            <h2>1. 通知權限</h2>
+            <p id="notificationHelp">先允許此網站傳送手機通知。iPhone / iPad 請先將網站「加入主畫面」後再啟用。</p>
+            <button id="enablePushBtn" class="btn primary no-export">允許通知並連線</button>
+          </article>
+          <article class="card setting">
+            <h2>2. 提醒時段</h2>
+            <div class="reminder-form">
+              <label>開始時間<input id="reminderStart" type="time" value="08:00"></label>
+              <label>結束時間<input id="reminderEnd" type="time" value="22:00"></label>
+              <label>提醒間隔<select id="reminderInterval"><option value="30">每 30 分鐘</option><option value="60" selected>每 60 分鐘</option><option value="90">每 90 分鐘</option><option value="120">每 120 分鐘</option></select></label>
+              <label>時區<input id="reminderTimezone" type="text" readonly></label>
+            </div>
+          </article>
+          <article class="card setting reminder-master">
+            <h2>3. 開啟背景提醒</h2>
+            <p>提醒設定會綁定「這台手機＋目前紀錄對象」。同一台手機可為不同客戶設定不同時段。</p>
+            <label class="switch-row"><input id="reminderEnabled" type="checkbox"><span class="switch-ui"></span><b>啟用喝水提醒</b></label>
+            <div class="reminder-actions no-export">
+              <button id="saveReminderBtn" class="btn primary">儲存提醒設定</button>
+              <button id="testPushBtn" class="btn">傳送測試通知</button>
+            </div>
+            <small id="nextReminderText" class="next-reminder">尚未設定下一次提醒</small>
+          </article>
+          <article class="card setting">
+            <h2>手機使用提醒</h2>
+            <p><b>Android：</b>建議使用 Chrome 並允許通知。<br><b>iPhone / iPad：</b>需要 iOS / iPadOS 16.4 以上，先由 Safari「加入主畫面」，再從主畫面的 APP 開啟並允許通知。</p>
+            <p class="privacy-note">Railway 後端只需保存推播 subscription、提醒時段、時區、每日建議水量與此紀錄的顯示姓名；完整身體數據仍保留在手機瀏覽器。</p>
+          </article>
+        </div>
       </section>
 
       <section id="view-protein" class="view export-page">
@@ -113,12 +156,12 @@
       <section id="view-report" class="view export-page report-page">
         <div class="report-title"><img src="assets/logo.jpeg" alt="Logo"><div><h1>傳奇健康管理學院<br>三天體態啟動紀錄表</h1><p>記錄現在的自己・見證三天後的改變</p></div><div class="identity"><span>姓名：<b id="reportName">—</b></span><span>年齡：<b id="reportAge">—</b></span></div></div>
         <div class="report-summary"><span>每日水量 <b id="reportWater">—</b></span><span>每日蛋白質 <b id="reportProtein">—</b></span><span>開始日期 <b id="reportDate">—</b></span></div>
-        <div class="report-section"><h2>一、身體數據</h2><div class="responsive-table"><table><thead><tr><th>項目</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="reportBodyRows"></tbody></table></div></div>
+        <div class="report-section"><h2>一、身體數據</h2><div class="report-gender-line">性別：<b id="reportGender">—</b>　身高：<b id="reportHeight">—</b></div><div class="responsive-table"><table><thead><tr><th>項目／理想值</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="reportBodyRows"></tbody></table></div></div>
         <div class="report-section"><h2>二、生活狀態</h2><div id="reportLifestyle" class="report-mini-grid"></div></div>
         <div class="report-section"><h2>三、蛋白質攝取</h2><div id="reportProteinGrid" class="report-mini-grid"></div></div>
         <div class="report-section"><h2>四、自我感受</h2><div id="reportFeelings" class="report-mini-grid"></div></div>
         <div class="notice">⚠ 如有不適症狀，請立即停止並諮詢專業人員。</div>
-        <div class="version">20260907 完整版 v2</div>
+        <div class="version">20260907 Web Push 完整版 v4</div>
       </section>
 
       <section id="view-backup" class="view export-page">
@@ -127,7 +170,7 @@
           <article class="card setting"><h2>JSON 備份</h2><p>將「我的紀錄＋10組客戶」全部資料備份成檔案。</p><button id="backupBtn" class="btn primary no-export">下載備份</button></article>
           <article class="card setting"><h2>還原資料</h2><p>從先前下載的 JSON 備份檔還原。</p><label class="btn no-export file-btn">選擇備份檔<input id="restoreInput" type="file" accept="application/json,.json"></label></article>
           <article class="card setting"><h2>安裝到手機</h2><p>可在支援的瀏覽器加入主畫面，像一般 APP 一樣開啟。</p><button id="installBtn" class="btn no-export" hidden>安裝 APP</button></article>
-          <article class="card setting"><h2>資料位置</h2><p>目前資料使用瀏覽器 LocalStorage 儲存，不會自動同步到其他手機。</p></article>
+          <article class="card setting"><h2>資料位置</h2><p>完整健康紀錄使用瀏覽器 LocalStorage 儲存；只有 Web Push 所需的裝置訂閱與提醒排程會送到 Railway PostgreSQL。</p></article>
         </div>
       </section>
     </main>
