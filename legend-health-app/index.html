@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#173f2c" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>傳奇健康管理學院｜客戶管理 APP</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="appShell">
+    <header class="topbar no-export">
+      <div class="brand">
+        <img src="assets/logo.jpeg" alt="傳奇健康管理學院" />
+        <div><strong>傳奇健康管理學院</strong><span>健康管理客戶管理 APP</span></div>
+      </div>
+      <button id="menuBtn" class="icon-btn" aria-label="選單">☰</button>
+    </header>
+
+    <aside id="sidebar" class="sidebar no-export">
+      <div class="side-brand"><img src="assets/logo.jpeg" alt="Logo"><div><b>傳奇健康管理學院</b><small>Legend Health Management Academy</small></div></div>
+      <nav id="nav">
+        <button data-view="dashboard" class="active">⌂ 總覽</button>
+        <button data-view="profile">👤 基本資料</button>
+        <button data-view="body">📏 身體數據</button>
+        <button data-view="lifestyle">💧 生活狀態</button>
+        <button data-view="protein">🥛 蛋白質紀錄</button>
+        <button data-view="feelings">❤️ 自我感受</button>
+        <button data-view="report">📄 完整報告</button>
+        <button data-view="backup">⚙️ 備份與設定</button>
+      </nav>
+      <div class="side-foot">資料僅儲存在此裝置瀏覽器</div>
+    </aside>
+
+    <main class="content">
+      <section class="client-toolbar no-export">
+        <div class="client-select-wrap">
+          <label>目前紀錄對象</label>
+          <select id="clientSelect"></select>
+        </div>
+        <button id="quickSaveBtn" class="btn">儲存</button>
+        <button id="exportPngBtn" class="btn">PNG</button>
+        <button id="exportPdfBtn" class="btn primary">PDF</button>
+        <button id="shareBtn" class="btn">分享</button>
+      </section>
+
+      <section id="view-dashboard" class="view active export-page">
+        <div class="page-head">
+          <div><p class="eyebrow">健康管理總覽</p><h1 id="dashGreeting">三天體態啟動紀錄</h1><p>記錄現在的自己，見證三天後的改變。</p></div>
+          <img src="assets/logo.jpeg" alt="Logo" />
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><span>客戶姓名</span><strong id="dashName">—</strong><small id="dashAge">年齡 —</small></article>
+          <article class="stat-card water"><span>每日建議水量</span><strong id="dashWater">—</strong><small>體重 × 50 cc</small></article>
+          <article class="stat-card protein"><span>每日建議蛋白質</span><strong id="dashProtein">—</strong><small>(體重 × 2) ÷ 7 份</small></article>
+          <article class="stat-card"><span>三天體重變化</span><strong id="dashWeightChange">—</strong><small>Day 3 − 啟動前</small></article>
+        </div>
+        <div class="card progress-card">
+          <div class="card-title"><h2>三天進度</h2><span id="completionText">0%</span></div>
+          <div class="progress"><i id="completionBar"></i></div>
+          <div id="daySummary" class="day-summary"></div>
+        </div>
+        <div class="card manager-note"><b>健康管理師提醒</b><p>三天體態啟動的重點不只是體重，請一起觀察腰圍、水腫、排便、精神、睡眠與飲食節奏是否改善。</p></div>
+      </section>
+
+      <section id="view-profile" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">客戶資料</p><h1>基本資料</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="card form-card">
+          <div class="form-grid">
+            <label>姓名<input id="clientName" data-root="name" autocomplete="off" placeholder="請輸入姓名"></label>
+            <label>年齡<input id="clientAge" data-root="age" type="number" min="0" max="120" inputmode="numeric" placeholder="歲"></label>
+            <label>電話<input id="clientPhone" data-root="phone" type="tel" autocomplete="off" placeholder="選填"></label>
+            <label>開始日期<input id="startDate" data-root="startDate" type="date"></label>
+            <label class="wide">備註<textarea id="clientNote" data-root="note" rows="5" placeholder="健康管理師備註、飲食習慣或需要關注的事項"></textarea></label>
+          </div>
+        </div>
+        <div class="card no-export action-zone"><button id="clearClientBtn" class="btn danger">清除此客戶資料</button></div>
+      </section>
+
+      <section id="view-body" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">第一部分</p><h1>身體數據紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="formula-strip"><span>姓名：<b data-print="name">—</b></span><span>每日水量：<b data-print="water">—</b></span><span>每日蛋白質：<b data-print="protein">—</b></span></div>
+        <div class="card table-card"><div class="responsive-table"><table><thead><tr><th>項目</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="bodyRows"></tbody></table></div></div>
+        <div class="card compare-card"><h2>啟動前 → Day 3</h2><div id="comparisonGrid" class="comparison-grid"></div></div>
+      </section>
+
+      <section id="view-lifestyle" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">第二部分</p><h1>生活狀態紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="formula-strip"><span>建議每日水量：<b data-print="water">—</b></span><span>起床先喝 500cc</span><span>少量多次慢慢喝</span></div>
+        <div id="lifestyleGrid" class="four-grid"></div>
+      </section>
+
+      <section id="view-protein" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">第三部分</p><h1>蛋白質攝取紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="formula-strip"><span>建議：<b data-print="protein">—</b></span><span>一份蛋白質約 7 克</span><span>N4：7匙約 3份</span></div>
+        <div class="card table-card"><div class="responsive-table"><table><thead><tr><th>項目</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody>
+          <tr><th>N4 植物蛋白<small>7匙 ≈ 3份</small></th><td><input data-path="protein.n4.day1" type="number" min="0" step="0.5" placeholder="份"></td><td><input data-path="protein.n4.day2" type="number" min="0" step="0.5" placeholder="份"></td><td><input data-path="protein.n4.day3" type="number" min="0" step="0.5" placeholder="份"></td></tr>
+          <tr><th>食物蛋白<small>蛋、豆、魚、肉</small></th><td><input data-path="protein.food.day1" type="number" min="0" step="0.5" placeholder="份"></td><td><input data-path="protein.food.day2" type="number" min="0" step="0.5" placeholder="份"></td><td><input data-path="protein.food.day3" type="number" min="0" step="0.5" placeholder="份"></td></tr>
+          <tr class="total"><th>每日合計</th><td id="proteinTotal1">0 份</td><td id="proteinTotal2">0 份</td><td id="proteinTotal3">0 份</td></tr>
+        </tbody></table></div></div>
+        <div id="proteinStatus" class="status-grid"></div>
+      </section>
+
+      <section id="view-feelings" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">第四部分</p><h1>自我感受紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div id="feelingGrid" class="three-grid"></div>
+        <div class="notice">⚠ 若有任何不適症狀，請立即停止並諮詢合格醫療或健康專業人員。</div>
+      </section>
+
+      <section id="view-report" class="view export-page report-page">
+        <div class="report-title"><img src="assets/logo.jpeg" alt="Logo"><div><h1>傳奇健康管理學院<br>三天體態啟動紀錄表</h1><p>記錄現在的自己・見證三天後的改變</p></div><div class="identity"><span>姓名：<b id="reportName">—</b></span><span>年齡：<b id="reportAge">—</b></span></div></div>
+        <div class="report-summary"><span>每日水量 <b id="reportWater">—</b></span><span>每日蛋白質 <b id="reportProtein">—</b></span><span>開始日期 <b id="reportDate">—</b></span></div>
+        <div class="report-section"><h2>一、身體數據</h2><div class="responsive-table"><table><thead><tr><th>項目</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="reportBodyRows"></tbody></table></div></div>
+        <div class="report-section"><h2>二、生活狀態</h2><div id="reportLifestyle" class="report-mini-grid"></div></div>
+        <div class="report-section"><h2>三、蛋白質攝取</h2><div id="reportProteinGrid" class="report-mini-grid"></div></div>
+        <div class="report-section"><h2>四、自我感受</h2><div id="reportFeelings" class="report-mini-grid"></div></div>
+        <div class="notice">⚠ 如有不適症狀，請立即停止並諮詢專業人員。</div>
+        <div class="version">20260907 完整版 v2</div>
+      </section>
+
+      <section id="view-backup" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">資料管理</p><h1>備份與設定</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="settings-grid">
+          <article class="card setting"><h2>JSON 備份</h2><p>將「我的紀錄＋10組客戶」全部資料備份成檔案。</p><button id="backupBtn" class="btn primary no-export">下載備份</button></article>
+          <article class="card setting"><h2>還原資料</h2><p>從先前下載的 JSON 備份檔還原。</p><label class="btn no-export file-btn">選擇備份檔<input id="restoreInput" type="file" accept="application/json,.json"></label></article>
+          <article class="card setting"><h2>安裝到手機</h2><p>可在支援的瀏覽器加入主畫面，像一般 APP 一樣開啟。</p><button id="installBtn" class="btn no-export" hidden>安裝 APP</button></article>
+          <article class="card setting"><h2>資料位置</h2><p>目前資料使用瀏覽器 LocalStorage 儲存，不會自動同步到其他手機。</p></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="exportMask" class="export-mask no-export"><div class="spinner"></div><b>正在製作檔案…</b></div>
+  <div id="toast" class="toast no-export"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

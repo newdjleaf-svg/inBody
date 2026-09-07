@@ -1,0 +1,9 @@
+{
+  "name":"傳奇健康管理學院三天體態啟動紀錄表",
+  "short_name":"三天體態紀錄",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f4f7f3",
+  "theme_color":"#173f2c",
+  "icons":[{"src":"assets/logo.jpeg","sizes":"512x512","type":"image/jpeg","purpose":"any maskable"}]
+}
