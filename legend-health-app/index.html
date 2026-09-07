@@ -88,6 +88,8 @@
         <div class="formula-strip"><span>姓名：<b data-print="name">—</b></span><span>每日水量：<b data-print="water">—</b></span><span>每日蛋白質：<b data-print="protein">—</b></span></div>
         <div class="ideal-guide" id="idealGuide"></div>
         <div class="card table-card"><div class="responsive-table"><table><thead><tr><th>項目／理想值</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="bodyRows"></tbody></table></div></div>
+        <div class="card table-card clinical-card"><h2>血糖・血壓・血脂紀錄</h2><p class="clinical-note">參考值僅供健康管理紀錄；異常數值需由醫師結合病史、用藥與個人風險評估。LDL-C 本表依指定採一般參考 &lt;130 mg/dL。</p><div class="responsive-table"><table class="clinical-table"><thead><tr><th>項目／低標・高標參考</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th><th>健康提醒</th></tr></thead><tbody id="clinicalRows"></tbody></table></div></div>
+        <div class="card medication-card"><h2>用藥紀錄</h2><div class="form-grid"><label>目前是否有服用藥物<select id="medicationUse"><option value="">請選擇</option><option value="否">否</option><option value="是">是</option></select></label></div><div id="medicationRows" class="medication-rows"></div><button id="addMedicationBtn" type="button" class="btn no-export">＋ 新增藥物</button><p class="clinical-note">請依醫師或藥師指示用藥，不可自行停藥、減藥或調整劑量。</p></div>
         <div class="card compare-card"><h2>啟動前 → Day 3</h2><div id="comparisonGrid" class="comparison-grid"></div></div>
       </section>
 
@@ -157,11 +159,12 @@
         <div class="report-title"><img src="assets/logo.jpeg" alt="Logo"><div><h1>傳奇健康管理學院<br>三天體態啟動紀錄表</h1><p>記錄現在的自己・見證三天後的改變</p></div><div class="identity"><span>姓名：<b id="reportName">—</b></span><span>年齡：<b id="reportAge">—</b></span></div></div>
         <div class="report-summary"><span>每日水量 <b id="reportWater">—</b></span><span>每日蛋白質 <b id="reportProtein">—</b></span><span>開始日期 <b id="reportDate">—</b></span></div>
         <div class="report-section"><h2>一、身體數據</h2><div class="report-gender-line">性別：<b id="reportGender">—</b>　身高：<b id="reportHeight">—</b></div><div class="responsive-table"><table><thead><tr><th>項目／理想值</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="reportBodyRows"></tbody></table></div></div>
-        <div class="report-section"><h2>二、生活狀態</h2><div id="reportLifestyle" class="report-mini-grid"></div></div>
-        <div class="report-section"><h2>三、蛋白質攝取</h2><div id="reportProteinGrid" class="report-mini-grid"></div></div>
-        <div class="report-section"><h2>四、自我感受</h2><div id="reportFeelings" class="report-mini-grid"></div></div>
+        <div class="report-section"><h2>二、血糖・血壓・血脂</h2><div class="responsive-table"><table class="clinical-table"><thead><tr><th>項目／參考</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th><th>健康提醒</th></tr></thead><tbody id="reportClinicalRows"></tbody></table></div><div id="reportMedication" class="report-medication"></div></div>
+        <div class="report-section"><h2>三、生活狀態</h2><div id="reportLifestyle" class="report-mini-grid"></div></div>
+        <div class="report-section"><h2>四、蛋白質攝取</h2><div id="reportProteinGrid" class="report-mini-grid"></div></div>
+        <div class="report-section"><h2>五、自我感受</h2><div id="reportFeelings" class="report-mini-grid"></div></div>
         <div class="notice">⚠ 如有不適症狀，請立即停止並諮詢專業人員。</div>
-        <div class="version">20260907 Web Push 完整版 v4</div>
+        <div class="version">20260908 血糖・血壓・血脂完整版 v5</div>
       </section>
 
       <section id="view-backup" class="view export-page">
