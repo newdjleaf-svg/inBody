@@ -29,6 +29,7 @@
         <button data-view="lifestyle">💧 生活狀態</button>
         <button data-view="reminder">🔔 喝水提醒</button>
         <button data-view="nutrition">🥗 六大營養素</button>
+        <button data-view="exercise">🚶 運動目標</button>
         <button data-view="feelings">❤️ 自我感受</button>
         <button data-view="report">📄 完整報告</button>
         <button data-view="backup">⚙️ 備份與設定</button>
@@ -147,8 +148,15 @@
         <div class="card guide-card"><h2>每日飲食原則</h2><div class="guide-list"><span>① 每餐蛋白質優先</span><span>② 水分分次補充</span><span>③ 蔬菜與水果補足纖維、維生素與礦物質</span><span>④ 選擇堅果、酪梨、橄欖油等好油脂</span><span>⑤ 碳水優先地瓜、南瓜、糙米、燕麥、玉米</span><span>⑥ 維持規律運動與睡眠</span></div></div>
       </section>
 
+
+      <section id="view-exercise" class="view export-page">
+        <div class="page-head compact-head"><div><p class="eyebrow">第四部分</p><h1>運動目標・步行紀錄</h1><p>每日基準 6,000 步；可分次記錄步數、持續時間與時間戳，系統自動加總並估算熱量消耗。</p></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="card exercise-guide a4-block"><b>🚶 每日步行目標：6,000 步</b><span>熱量為估算值，依目前體重與步數換算；實際消耗會受步速、坡度、體能與步幅影響。</span></div>
+        <div id="exerciseGrid" class="exercise-grid"></div>
+      </section>
+
       <section id="view-feelings" class="view export-page">
-        <div class="page-head compact-head"><div><p class="eyebrow">第四部分</p><h1>自我感受紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
+        <div class="page-head compact-head"><div><p class="eyebrow">第五部分</p><h1>自我感受紀錄</h1></div><img src="assets/logo.jpeg" alt="Logo"></div>
         <div id="feelingGrid" class="three-grid"></div>
         <div class="notice">⚠ 若有任何不適症狀，請立即停止並諮詢合格醫療或健康專業人員。</div>
       </section>
@@ -159,10 +167,11 @@
         <div class="report-section"><h2>一、身體數據</h2><div class="report-gender-line">性別：<b id="reportGender">—</b>　身高：<b id="reportHeight">—</b></div><div class="responsive-table"><table><thead><tr><th>項目／理想值</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr></thead><tbody id="reportBodyRows"></tbody></table></div></div>
         <div class="report-section"><h2>二、血糖・血壓・血脂</h2><div class="responsive-table"><table class="clinical-table"><thead><tr><th>項目／參考</th><th>啟動前</th><th>Day 1</th><th>Day 2</th><th>Day 3</th><th>健康提醒</th></tr></thead><tbody id="reportClinicalRows"></tbody></table></div><div id="reportMedication" class="report-medication"></div></div>
         <div class="report-section"><h2>三、生活狀態</h2><div id="reportLifestyle" class="report-mini-grid"></div></div>
-        <div class="report-section"><h2>四、六大營養素</h2><div id="reportNutritionGrid" class="report-nutrition-grid"></div></div>
-        <div class="report-section"><h2>五、自我感受</h2><div id="reportFeelings" class="report-mini-grid"></div></div>
+        <div class="report-section a4-block"><h2>四、六大營養素</h2><div id="reportNutritionGrid" class="report-nutrition-grid"></div></div>
+        <div class="report-section a4-block"><h2>五、運動目標・步行紀錄</h2><div id="reportExerciseGrid" class="report-exercise-grid"></div></div>
+        <div class="report-section"><h2>六、自我感受</h2><div id="reportFeelings" class="report-mini-grid"></div></div>
         <div class="notice">⚠ 如有不適症狀，請立即停止並諮詢專業人員。</div>
-        <div class="version">20260908 分次飲食紀錄・全日自動加總 v7</div>
+        <div class="version">20260908 A4列印・六大營養素・步行運動 v9</div>
       </section>
 
       <section id="view-backup" class="view export-page">

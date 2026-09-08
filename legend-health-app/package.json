@@ -1,12 +1,14 @@
 {
   "name": "legend-health-manager",
-  "version": "4.0.0",
+  "version": "9.0.0",
   "private": true,
   "scripts": {
     "start": "node server.js",
     "generate-vapid": "node scripts/generate-vapid.js"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "express": "^4.21.2",
     "luxon": "^3.7.2",
