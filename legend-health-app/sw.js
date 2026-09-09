@@ -1,4 +1,4 @@
-const CACHE='legend-health-v9';
+const CACHE='legend-health-v10';
 const ASSETS=['./','./index.html','./style.css','./app.js','./manifest.webmanifest','./assets/logo.jpeg'];
 
 self.addEventListener('install',e=>{
